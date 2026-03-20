@@ -19,10 +19,9 @@ public class SecurityConfig {
 
                 // Configure route permissions
                 .authorizeHttpRequests(auth -> auth
-                        // Allow anyone to access the product catalog APIs without logging in
                         .requestMatchers("/api/products/**").permitAll()
-
-                        // Require authentication for anything else
+                        .requestMatchers("/api/custom-designs/**").permitAll()
+                        .requestMatchers("/api/users/**").permitAll()
                         .anyRequest().authenticated()
                 );
 
