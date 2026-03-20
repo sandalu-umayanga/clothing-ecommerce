@@ -3,8 +3,6 @@ version: '3.8'
 services:
   postgres-db:
     image: postgres:15-alpine
-    container_name: ecommerce_postgres
-    restart: always
     env_file:
       - .env
     environment:
@@ -18,10 +16,19 @@ services:
     networks:
       - backend
 
+#  backend:
+#    build: .
+#    env_file:
+#      - .env
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - postgres-db
+#    networks:
+#      - backend
+
   pgadmin:
     image: dpage/pgadmin4
-    container_name: ecommerce_pgadmin
-    restart: always
     env_file:
       - .env
     environment:
