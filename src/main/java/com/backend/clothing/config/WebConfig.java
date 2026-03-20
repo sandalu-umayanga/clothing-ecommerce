@@ -1,0 +1,24 @@
+package com.backend.clothing.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        Path uploadDir = Paths.get("uploads/designs");
+
+        // .toUri().toString() automatically formats it perfectly for Linux, Mac, or Windows
+        // (e.g., file:///home/snake/projects/.../uploads/designs/)
+        String uploadPathUri = uploadDir.toAbsolutePath().toUri().toString();
+
+        registry.addResourceHandler("/api/files/designs/**")
+                .addResourceLocations(uploadPathUri);
+    }
+}
