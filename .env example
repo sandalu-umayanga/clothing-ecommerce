@@ -1,0 +1,16 @@
+# Database Configuration
+DB_HOST=
+DB_PORT=
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+
+# pgAdmin (add this if not already)
+PGADMIN_EMAIL=
+PGADMIN_PASSWORD=
+
+# Tableau Connected App Secrets (Get these from your Tableau Server)
+TABLEAU_SERVER_URL=https://prod-useast-a.online.tableau.com
+TABLEAU_CLIENT_ID=your-tableau-client-id-here
+TABLEAU_SECRET_ID=your-tableau-secret-id-here
+TABLEAU_SECRET_VALUE=your-tableau-secret-value-here

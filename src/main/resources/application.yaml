@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:clothing_db}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:secret}
+  jpa:
+    hibernate:
+      ddl-auto: update # Use 'validate' in actual production
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+# Custom properties for Tableau Connected Apps
+tableau:
+  server-url: "https://prod-useast-a.online.tableau.com" # Example Tableau Cloud URL
+  client-id: "YOUR_CONNECTED_APP_CLIENT_ID"
+  secret-id: "YOUR_CONNECTED_APP_SECRET_ID"
+  secret-value: "YOUR_CONNECTED_APP_SECRET_VALUE"
