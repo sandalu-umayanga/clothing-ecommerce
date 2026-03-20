@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/custom-designs")
 @CrossOrigin(origins = "*")
@@ -53,5 +55,14 @@ public class CustomDesignController {
         CustomDesign savedDesign = customDesignRepository.save(design);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedDesign);
+    }
+
+
+    // Fetch all custom designs for a specific user
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<CustomDesign>> getUserDesigns(@PathVariable Long userId) {
+        // We defined this method in our CustomDesignRepository earlier!
+        List<CustomDesign> designs = customDesignRepository.findByUserId(userId);
+        return ResponseEntity.ok(designs);
     }
 }
