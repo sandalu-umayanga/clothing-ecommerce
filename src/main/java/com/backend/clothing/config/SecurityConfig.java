@@ -22,6 +22,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/products/**").permitAll()
                         .requestMatchers("/api/custom-designs/**").permitAll()
                         .requestMatchers("/api/users/**").permitAll()
+                        .requestMatchers("/api/files/**").permitAll() // Allow browsers to load the images!
                         .anyRequest().authenticated()
                 );
 
