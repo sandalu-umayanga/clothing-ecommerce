@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "orders") // 'order' is a reserved keyword in SQL
+@Table(name = "orders") 
 @Data
 public class Order {
 
@@ -15,8 +15,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Links the order to the customer
-    @ManyToOne(fetch = FetchType.LAZY)
+    // Change to EAGER to ensure user details are sent to Admin Dashboard
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -27,9 +27,8 @@ public class Order {
     @Column(nullable = false)
     private OrderStatus status;
 
-    // One order can have many items. CascadeType.ALL means if we save an Order,
-    // it automatically saves all the OrderItems attached to it.
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    // Ensure items are always loaded
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<OrderItem> items;
 
     @Column(name = "created_at", updatable = false)

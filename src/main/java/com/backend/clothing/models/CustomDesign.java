@@ -13,8 +13,8 @@ public class CustomDesign {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Links the design to the user who uploaded it
-    @ManyToOne(fetch = FetchType.LAZY)
+    // Use EAGER so user details show in Admin Dashboard tables
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
