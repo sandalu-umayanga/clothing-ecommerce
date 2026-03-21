@@ -3,26 +3,21 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-# use environment variables for database configuration in production, with defaults for local development
-#  datasource:
-#    url: jdbc:postgresql://${DB_HOST:postgres-db}:${DB_PORT:5432}/${DB_NAME}
-#    username: ${DB_USER}
-#    password: ${DB_PASSWORD}
   datasource:
     url: jdbc:postgresql://localhost:5432/clothing_ecommerce_db
     username: ecommerce_admin
     password: super_secret_password_123
   jpa:
     hibernate:
-      ddl-auto: update # Use 'validate' in actual production
+      ddl-auto: update 
     show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-# Custom properties for Tableau Connected Apps
+# Custom properties for Tableau Connected Apps - Updated with your live credentials
 tableau:
-  server-url: "https://prod-useast-a.online.tableau.com" # Example Tableau Cloud URL
-  client-id: "YOUR_CONNECTED_APP_CLIENT_ID"
-  secret-id: "YOUR_CONNECTED_APP_SECRET_ID"
-  secret-value: "YOUR_CONNECTED_APP_SECRET_VALUE"
+  server-url: "https://prod-in-a.online.tableau.com" 
+  client-id: "f7becdd8-0bf3-40e4-92bc-acd834830700"
+  secret-id: "45edd21c-78e0-4615-8d01-1b3ce87ed408"
+  secret-value: "q6ySKZujfE+VpctKm/PVoHus1vANT9Z0RO+Y+c1lKmk="

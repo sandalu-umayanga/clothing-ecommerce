@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import api from '../api/axiosConfig';
 
-const CustomDesignForm = () => {
+// 1. ADD { user } RIGHT HERE!
+const CustomDesignForm = ({ user }) => {
   const [file, setFile] = useState(null);
   const [specifications, setSpecifications] = useState('');
   const [status, setStatus] = useState({ loading: false, success: false, error: null });
@@ -12,27 +13,20 @@ const CustomDesignForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!file) {
-      setStatus({ ...status, error: "Please select an image file." });
-      return;
-    }
-
+    if (!file) { return; }
     setStatus({ loading: true, success: false, error: null });
 
-    // When sending files, we MUST use FormData instead of standard JSON
     const formData = new FormData();
     formData.append('file', file);
     formData.append('specifications', specifications);
-    formData.append('userId', 1); // Hardcoding our dummy user ID for now
+    
+    // 2. Now it knows what user.id is!
+    formData.append('userId', user.id); 
 
     try {
-      // Notice we are passing formData, not a JSON object
-      await api.post('/custom-designs/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+        await api.post('/custom-designs/upload', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        });
       
       setStatus({ loading: false, success: true, error: null });
       setFile(null);

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/axiosConfig';
 
-const ProductCatalog = () => {
+const ProductCatalog = ({ onAddToCart }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch products from Spring Boot when the component mounts
     const fetchProducts = async () => {
       try {
         const response = await api.get('/products');
@@ -21,7 +20,7 @@ const ProductCatalog = () => {
     };
 
     fetchProducts();
-  }, []); // The empty array means this runs exactly once on page load
+  }, []);
 
   if (loading) {
     return (
@@ -47,24 +46,20 @@ const ProductCatalog = () => {
         Latest Arrivals
       </h2>
       
-      {/* Responsive Grid: 1 column on mobile, 2 on tablet, 4 on desktop */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {products.map((product) => (
           <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-            {/* Product Image */}
             <div className="h-64 bg-gray-200 overflow-hidden">
               <img 
                 src={product.imageUrl} 
                 alt={product.name} 
                 className="w-full h-full object-cover object-center"
                 onError={(e) => {
-                  // Fallback if the image link is broken
                   e.target.src = 'https://via.placeholder.com/400x400?text=No+Image';
                 }}
               />
             </div>
             
-            {/* Product Details */}
             <div className="p-6">
               <p className="text-sm text-gray-500 mb-1 uppercase tracking-wide font-semibold">
                 {product.category}
@@ -76,7 +71,10 @@ const ProductCatalog = () => {
                 ${product.price.toFixed(2)}
               </p>
               
-              <button className="w-full bg-black text-white py-2 rounded-md font-semibold hover:bg-gray-800 transition-colors">
+              <button 
+                onClick={() => onAddToCart(product)}
+                className="w-full bg-black text-white py-2 rounded-md font-semibold hover:bg-gray-800 transition-colors"
+              >
                 Add to Cart
               </button>
             </div>

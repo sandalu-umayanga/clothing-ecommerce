@@ -1,5 +1,6 @@
 package com.backend.clothing.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -17,7 +18,15 @@ public class User {
     private String email;
 
     @Column(nullable = false)
+    @JsonIgnore // CRITICAL: Never return the password hash in API responses!
     private String passwordHash;
+
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private String address;
+    private String city;
+    private String zipCode;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -26,6 +35,7 @@ public class User {
     // This is crucial for your analytics integration
     // It maps this specific user to a Tableau license or Row-Level Security policy
     @Column(name = "tableau_user_id")
+    @JsonIgnore // Sensitive internal ID
     private String tableauUserId;
 
     @Column(name = "created_at", updatable = false)

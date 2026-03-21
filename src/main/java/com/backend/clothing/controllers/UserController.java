@@ -3,8 +3,8 @@ package com.backend.clothing.controllers;
 import com.backend.clothing.models.User;
 import com.backend.clothing.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,12 +19,18 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    // A simple endpoint to register a user for testing
-    @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        // In a real scenario, you would hash the password here.
-        // For testing, we are just saving the raw JSON to the database.
-        User savedUser = userRepository.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
+    @PutMapping("/profile")
+    public ResponseEntity<User> updateProfile(@RequestBody User updatedUser, Authentication authentication) {
+        User currentUser = (User) authentication.getPrincipal();
+        
+        return userRepository.findById(currentUser.getId()).map(user -> {
+            user.setFirstName(updatedUser.getFirstName());
+            user.setLastName(updatedUser.getLastName());
+            user.setPhoneNumber(updatedUser.getPhoneNumber());
+            user.setAddress(updatedUser.getAddress());
+            user.setCity(updatedUser.getCity());
+            user.setZipCode(updatedUser.getZipCode());
+            return ResponseEntity.ok(userRepository.save(user));
+        }).orElse(ResponseEntity.notFound().build());
     }
 }

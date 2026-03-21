@@ -2,9 +2,12 @@ package com.backend.clothing.repositories;
 
 import com.backend.clothing.models.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    // Allows a user to see their specific order history
-    List<Order> findByUserId(Long userId);
+    
+    @Query("SELECT o FROM Order o WHERE o.user.id = :userId")
+    List<Order> findByUserId(@Param("userId") Long userId);
 }
